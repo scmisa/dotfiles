@@ -12,7 +12,15 @@
   outputs = { self, nixpkgs, home-manager, nixvim, ... }:
   let 
     system = "x86_64-linux"; 
-    pkgs = nixpkgs.legacyPackages.${system};
+    # Configure nixpkgs to allow unfree packages
+    pkgs = import nixpkgs {
+      inherit system;
+      config = {
+        allowUnfree = true;
+        # Optionally, you can be more specific with:
+        # allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "steam" "steam-run" "steam-original" ];
+      };
+    };
     pkgs-unstable = pkgs; # Since nixpkgs already points to unstable
   in {
     homeConfigurations = {

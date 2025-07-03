@@ -94,11 +94,29 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+  
+  # GIT
+  programs.git = {
+  enable = true;
+  config = {
+  user.name  = "Jakub";
+  user.email = "jakuboleszczuk@protonmail.com";
+  init.defaultBranch = "main";
+  pull.rebase = true;
+   };
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = "nix-command flakes";
+  
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+  automatic = true;
+  dates = "daily";
+  options = "--delete-older-than 3";
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
