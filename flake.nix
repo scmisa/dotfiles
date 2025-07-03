@@ -12,27 +12,46 @@
   outputs = { self, nixpkgs, home-manager, nixvim, ... }:
   let 
     system = "x86_64-linux"; 
-    # Configure nixpkgs to allow unfree packages
     pkgs = import nixpkgs {
       inherit system;
-      config = {
-        allowUnfree = true;
-        # Optionally, you can be more specific with:
-        # allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "steam" "steam-run" "steam-original" ];
+      config.allowUnfree = true;
+    };
+    pkgs-unstable = pkgs;
+  in {
+    # ✅ SYSTEM
+    nixosConfigurations = {
+      # Desktop configuration
+      misa-nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./nixos/configuration.nix
+          ./nixos/hosts/desktop/hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
+        specialArgs = { inherit pkgs-unstable nixvim; };
+      };
+      
+      # Laptop configuration
+      misa-laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./nixos/configuration.nix
+          ./nixos/hosts/laptop/hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
+        specialArgs = { inherit pkgs-unstable nixvim; };
       };
     };
-    pkgs-unstable = pkgs; # Since nixpkgs already points to unstable
-  in {
+
+    # ✅ UŻYTKOWNIK
     homeConfigurations = {
       misa = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./misa.nix
+          ./home/misa.nix
           nixvim.homeManagerModules.nixvim
         ];
-        extraSpecialArgs = { 
-          inherit pkgs-unstable nixvim; 
-        };
+        extraSpecialArgs = { inherit pkgs-unstable nixvim; };
       };
     };
   };

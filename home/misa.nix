@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.username = "misa";
@@ -6,6 +6,20 @@
   home.stateVersion = "25.05";
 
   imports = [];  # już zaimportowane flake
+
+  # More comprehensive exclusions for Steam files
+  home.file = {
+    ".steam".enable = false;
+    ".local/share/Steam".enable = false;
+  };
+  
+  # Correctly formatted activation script
+  home.activation.excludeSteamFiles = lib.hm.dag.entryBefore ["linkGeneration"] ''
+    rm -f ~/.steam/steam.pipe ~/.steam/root/steam.pipe 2>/dev/null || true
+  '';
+
+  # Auto-start Steam when logging in (optional)
+  xdg.configFile."autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
 
   programs.nixvim = {
     config = {
