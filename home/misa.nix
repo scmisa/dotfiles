@@ -22,26 +22,24 @@
   xdg.configFile."autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
 
   programs.nixvim = {
-    config = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      
-      options = {
-        number = true;
-        relativenumber = true;
-        shiftwidth = 2;
-        expandtab = true;
-        tabstop = 2;
-      };
-      
-      colorschemes.catppuccin = {
-        enable = true;
-        flavour = "macchiato";
-      };
-      
-      plugins.lightline.enable = true;
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    
+    opts = {
+      number = true;
+      relativenumber = true;
+      shiftwidth = 2;
+      expandtab = true;
+      tabstop = 2;
     };
+    
+    colorschemes.catppuccin = {
+      enable = true;
+      settings.flavour = "macchiato";
+    };
+    
+    plugins.lightline.enable = true;
   };
 
   programs.kitty = {
@@ -64,7 +62,7 @@
   };
 
   home.packages = with pkgs; [
-    fira-code-nerdfont
+    nerd-fonts.fira-code
     kitty  # (jeśli nie masz systemowo)
     
     # Rust development tools
