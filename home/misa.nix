@@ -17,7 +17,7 @@
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
-      plugins = [ "git" "sudo" "docker" "kubectl" "rust" ];
+      plugins = [ "git" "sudo" "docker" "kubectl" "rust" "fzf" ];
     };
     
     shellAliases = {
@@ -41,6 +41,19 @@
         eval "$(rustup completions zsh 2>/dev/null || true)"
       fi
     '';
+  };
+
+  # FZF configuration
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCommand = "find . -type f";
+    defaultOptions = [
+      "--height 40%"
+      "--border"
+      "--reverse"
+      "--preview 'bat --style=numbers --color=always {}'"
+    ];
   };
 
   # Allow Steam to manage its own files
@@ -91,6 +104,10 @@
     nerd-fonts.fira-code
     kitty  # (jeśli nie masz systemowo)
     
+    # Command line tools
+    fzf
+    bat
+    
     # Rust development tools
     rustc
     cargo
@@ -125,6 +142,33 @@
     libpulseaudio
     libGL
     glxinfo
+
+    # Hacking and reverse engineering research tools
+    radare2           # Reverse engineering framework
+    ghidra            # Software reverse engineering tool
+    binwalk           # Firmware analysis tool
+    gdb               # GNU Debugger
+    strace            # Trace system calls and signals
+    ltrace            # Trace library calls
+    tcpdump           # Network packet analyzer
+    nmap              # Network exploration tool and security scanner
+    wireshark         # Network protocol analyzer
+    aircrack-ng       # Suite of tools for assessing WiFi network security
+    hydra             # Network logon cracker
+    john              # Password cracking software
+    sqlmap            # Automatic SQL injection and database takeover tool
+    metasploit        # Penetration testing framework
+    burpsuite         # Web application security testing tool
+    sqlninja          # SQL injection tool for Microsoft SQL Server
+    sqlsus            # MySQL injection and takeover tool
+    nikto             # Web server scanner
+    wpscan            # WordPress security scanner
+    dirb              # Web content scanner
+    exiftool          # Metadata reader and editor
+    binutils          # Collection of binary tools
+    ghex              # Hex editor
+    htop              # Interactive process viewer
+
   ];
   
   programs.home-manager.enable = true;
