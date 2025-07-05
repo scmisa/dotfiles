@@ -86,6 +86,7 @@
     isNormalUser = true;
     description = "Jakub";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -94,6 +95,16 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+  
+  # ZSH with Oh My Zsh
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      theme = "robbyrussell"; # You can change this to any oh-my-zsh theme you prefer
+      plugins = [ "git" "sudo" "docker" "kubectl" ];
+    };
+  };
   
   # GIT
   programs.git = {

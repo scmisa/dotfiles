@@ -7,6 +7,42 @@
 
   imports = [];  # już zaimportowane flake
 
+  # ZSH configuration for Home Manager
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    
+    oh-my-zsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" "sudo" "docker" "kubectl" "rust" ];
+    };
+    
+    shellAliases = {
+      ll = "ls -l";
+      la = "ls -la";
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      nixos-rebuild = "sudo nixos-rebuild switch --flake /home/misa/dotfiles#misa-nixos";
+      hm-switch = "home-manager switch --flake /home/misa/dotfiles#misa";
+    };
+    
+    # Add cargo completions and other shell enhancements
+    initContent = ''
+      # Enable cargo completions
+      if command -v cargo >/dev/null 2>&1; then
+        eval "$(cargo --zsh-completion 2>/dev/null || true)"
+      fi
+      
+      # Enable rustup completions
+      if command -v rustup >/dev/null 2>&1; then
+        eval "$(rustup completions zsh 2>/dev/null || true)"
+      fi
+    '';
+  };
+
   # Allow Steam to manage its own files
   # Remove the Steam file exclusions that can cause startup issues
 
@@ -43,6 +79,7 @@
       confirm_os_window_close = 0;
       enable_audio_bell = "no";
       background_opacity = "0.9";
+      shell = "${pkgs.zsh}/bin/zsh";
     };
 
     keybindings = {
