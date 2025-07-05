@@ -7,19 +7,8 @@
 
   imports = [];  # już zaimportowane flake
 
-  # More comprehensive exclusions for Steam files
-  home.file = {
-    ".steam".enable = false;
-    ".local/share/Steam".enable = false;
-  };
-  
-  # Correctly formatted activation script
-  home.activation.excludeSteamFiles = lib.hm.dag.entryBefore ["linkGeneration"] ''
-    rm -f ~/.steam/steam.pipe ~/.steam/root/steam.pipe 2>/dev/null || true
-  '';
-
-  # Auto-start Steam when logging in (optional)
-  xdg.configFile."autostart/steam.desktop".source = "${pkgs.steam}/share/applications/steam.desktop";
+  # Allow Steam to manage its own files
+  # Remove the Steam file exclusions that can cause startup issues
 
   programs.nixvim = {
     enable = true;
@@ -83,7 +72,7 @@
     wine              # For running Windows games
     winetricks        # Helper scripts for Wine
     
-    # Libraries for gaming
+    # Libraries for gaming and Steam compatibility
     giflib
     libpng
     gnutls
@@ -92,6 +81,13 @@
     vulkan-tools
     vulkan-loader
     vulkan-headers
+    xorg.libXcursor
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXScrnSaver
+    libpulseaudio
+    libGL
+    glxinfo
   ];
   
   programs.home-manager.enable = true;

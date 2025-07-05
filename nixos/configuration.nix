@@ -109,6 +109,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
+  # Enable GameMode for better gaming performance
+  programs.gamemode.enable = true;
+
+  # Hardware acceleration for 32-bit applications (needed for Steam games)
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   nix.settings.experimental-features = "nix-command flakes";
   
   nix.settings.auto-optimise-store = true;
