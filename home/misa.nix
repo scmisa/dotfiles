@@ -177,6 +177,20 @@
     ghex              # Hex editor
     htop              # Interactive process viewer
 
+    # Additional Applications
+    vlc             # VideoLAN Client (VLC) media player
+    gimp            # GNU Image Manipulation Program
+    inkscape        # Vector graphics editor
+    libreoffice     # Office suite
+    signal-desktop  # Encrypted messaging app
+    spotify         # Music streaming service
+    obs-studio      # Open Broadcaster Software for video recording and live streaming
+
+    # Other useful apps
+    keepassxc       # Password manager
+    transmission-gtk # BitTorrent client
+    mpv             # Media player
+
   ];
   
   programs.home-manager.enable = true;
