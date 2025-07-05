@@ -107,6 +107,8 @@
     # Command line tools
     fzf
     bat
+    fastfetch
+    
     
     # Rust development tools
     rustc
