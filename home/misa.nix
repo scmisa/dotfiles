@@ -156,14 +156,20 @@
     aircrack-ng       # Suite of tools for assessing WiFi network security
     hydra             # Network logon cracker
     john              # Password cracking software
-    sqlmap            # Automatic SQL injection and database takeover tool
+    # sqlmap            # Automatic SQL injection and database takeover tool - temporarily disabled due to Python compatibility
     metasploit        # Penetration testing framework
     burpsuite         # Web application security testing tool
-    sqlninja          # SQL injection tool for Microsoft SQL Server
-    sqlsus            # MySQL injection and takeover tool
-    nikto             # Web server scanner
-    wpscan            # WordPress security scanner
+    # pysqlrecon        # Offensive MSSQL toolkit - temporarily disabled due to Python compatibility
+    # python312Packages.hakuin  # Blind SQL Injection optimization framework - temporarily disabled due to Python compatibility
+    # commix            # Automated Command Injection Exploitation Tool - temporarily disabled due to Python compatibility
+    # nosqli            # NoSQL injection tool for MongoDB - temporarily disabled due to Python compatibility
+    dalfox            # XSS scanning and analysis tool
+    # nikto             # Web server scanner - temporarily disabled due to Python compatibility  
+    # wpscan            # WordPress security scanner - temporarily disabled due to Python compatibility
     dirb              # Web content scanner
+    gobuster          # Directory/file/DNS brute-forcer
+    ffuf              # Web fuzzer
+    hashcat           # Advanced password cracker
     exiftool          # Metadata reader and editor
     binutils          # Collection of binary tools
     ghex              # Hex editor
