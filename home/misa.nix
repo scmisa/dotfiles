@@ -14,6 +14,10 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     
+    sessionVariables = {
+      LIBVIRT_DEFAULT_URI = "qemu:///system";
+    };
+    
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
