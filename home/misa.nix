@@ -27,6 +27,27 @@
       "..." = "cd ../..";
       nixos-rebuild = "sudo nixos-rebuild switch --flake /home/misa/dotfiles#misa-nixos";
       hm-switch = "home-manager switch --flake /home/misa/dotfiles#misa";
+      
+      # Docker aliases
+      dps = "docker ps";
+      dpsa = "docker ps -a";
+      di = "docker images";
+      dcp = "docker-compose";
+      dcup = "docker-compose up -d";
+      dcdown = "docker-compose down";
+      dclogs = "docker-compose logs -f";
+      
+      # Kubernetes aliases
+      k = "kubectl";
+      kgp = "kubectl get pods";
+      kgs = "kubectl get services";
+      kgd = "kubectl get deployments";
+      kdesc = "kubectl describe";
+      
+      # Virtualization aliases
+      vms = "virsh list --all";
+      vmstart = "virsh start";
+      vmstop = "virsh shutdown";
     };
     
     # Add cargo completions and other shell enhancements
@@ -39,6 +60,21 @@
       # Enable rustup completions
       if command -v rustup >/dev/null 2>&1; then
         eval "$(rustup completions zsh 2>/dev/null || true)"
+      fi
+      
+      # Enable Docker completions
+      if command -v docker >/dev/null 2>&1; then
+        eval "$(docker completion zsh 2>/dev/null || true)"
+      fi
+      
+      # Enable kubectl completions
+      if command -v kubectl >/dev/null 2>&1; then
+        eval "$(kubectl completion zsh 2>/dev/null || true)"
+      fi
+      
+      # Enable docker-compose completions
+      if command -v docker-compose >/dev/null 2>&1; then
+        eval "$(docker-compose completion zsh 2>/dev/null || true)"
       fi
     '';
   };
@@ -191,6 +227,25 @@
     transmission-gtk # BitTorrent client
     mpv             # Media player
 
+    # Montage tools
+    davinci-resolve-studio # Professional video editing software
+    blender         # 3D creation suite
+    krita           # Digital painting software
+    darktable       # Photography workflow application
+    shotcut         # Video editor
+    audacity        # Audio editor
+    calibre         # E-book management software
+
+    # Virtualization and containerization
+    docker          # Container platform
+    qemu            # Emulator and virtualizer
+    virt-manager    # Virtual machine manager
+    libvirt         # Virtualization API
+    qemu_kvm        # KVM virtualization support
+    lxc             # Linux Containers
+    lxd             # Container hypervisor
+    docker-compose  # Tool for defining and running multi-container Docker applications
+    kubectl         # Kubernetes command-line tool
   ];
   
   programs.home-manager.enable = true;

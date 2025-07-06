@@ -31,16 +31,16 @@
         specialArgs = { inherit pkgs-unstable nixvim; };
       };
       
-      # Laptop configuration
-      misa-laptop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./nixos/configuration.nix
-          ./nixos/hosts/laptop/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
-        ];
-        specialArgs = { inherit pkgs-unstable nixvim; };
-      };
+      # Laptop configuration (commented out until hardware-configuration.nix is properly configured)
+      # misa-laptop = nixpkgs.lib.nixosSystem {
+      #   system = "x86_64-linux";
+      #   modules = [
+      #     ./nixos/configuration.nix
+      #     ./nixos/hosts/laptop/hardware-configuration.nix
+      #     home-manager.nixosModules.home-manager
+      #   ];
+      #   specialArgs = { inherit pkgs-unstable nixvim; };
+      # };
     };
 
     # ✅ UŻYTKOWNIK

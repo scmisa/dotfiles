@@ -1,0 +1,40 @@
+# Example Docker Compose configuration
+# This is a template you can use as a starting point for your projects
+
+version: '3.8'
+
+services:
+  # Example web application
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+    restart: unless-stopped
+    
+  # Example database
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: myapp
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    
+  # Example Redis cache
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    
+volumes:
+  postgres_data:
+
+# Common docker-compose commands:
+# docker-compose up -d          # Start services in background
+# docker-compose down           # Stop and remove services
+# docker-compose logs -f        # Follow logs
+# docker-compose ps             # List running services
+# docker-compose exec web sh    # Execute shell in web container
