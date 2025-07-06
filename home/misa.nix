@@ -32,10 +32,10 @@
       dps = "docker ps";
       dpsa = "docker ps -a";
       di = "docker images";
-      dcp = "docker-compose";
-      dcup = "docker-compose up -d";
-      dcdown = "docker-compose down";
-      dclogs = "docker-compose logs -f";
+      dcp = "docker compose";
+      dcup = "docker compose up -d";
+      dcdown = "docker compose down";
+      dclogs = "docker compose logs -f";
       
       # Kubernetes aliases
       k = "kubectl";
@@ -72,10 +72,7 @@
         eval "$(kubectl completion zsh 2>/dev/null || true)"
       fi
       
-      # Enable docker-compose completions
-      if command -v docker-compose >/dev/null 2>&1; then
-        eval "$(docker-compose completion zsh 2>/dev/null || true)"
-      fi
+      # Docker completion already includes compose subcommand completion
     '';
   };
 
@@ -224,11 +221,11 @@
 
     # Other useful apps
     keepassxc       # Password manager
-    transmission-gtk # BitTorrent client
+    transmission_3-gtk # BitTorrent client (updated package name)
     mpv             # Media player
 
     # Montage tools
-    davinci-resolve-studio # Professional video editing software
+    # davinci-resolve-studio # Professional video editing software
     blender         # 3D creation suite
     krita           # Digital painting software
     darktable       # Photography workflow application
@@ -242,8 +239,8 @@
     virt-manager    # Virtual machine manager
     libvirt         # Virtualization API
     qemu_kvm        # KVM virtualization support
-    lxc             # Linux Containers
-    lxd             # Container hypervisor
+    # lxc           # Linux Containers (commented out due to conflict with lxd-lts)
+    lxd-lts         # Container hypervisor (updated package name, includes lxc)
     docker-compose  # Tool for defining and running multi-container Docker applications
     kubectl         # Kubernetes command-line tool
   ];
