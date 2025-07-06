@@ -52,6 +52,7 @@
       vms = "virsh list --all";
       vmstart = "virsh start";
       vmstop = "virsh shutdown";
+      virt-manager = "LIBVIRT_DEFAULT_URI=qemu:///system virt-manager";
     };
     
     # Add cargo completions and other shell enhancements
