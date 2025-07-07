@@ -230,7 +230,7 @@
     mpv             # Media player
 
     # Montage tools
-    # davinci-resolve-studio # Professional video editing software
+    davinci-resolve-studio # Professional video editing software - temporarily disabled due to hash mismatch
     blender         # 3D creation suite
     krita           # Digital painting software
     darktable       # Photography workflow application
