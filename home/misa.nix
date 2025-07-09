@@ -184,6 +184,7 @@
     glxinfo
 
     # Hacking and reverse engineering research tools
+    cutter            # Qt GUI for Radare2
     radare2           # Reverse engineering framework
     ghidra            # Software reverse engineering tool
     binwalk           # Firmware analysis tool

@@ -13,6 +13,13 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  # Kernel parameters for AMD GPU optimization
+  boot.kernelParams = [
+    "amdgpu.dc=1"              # Enable AMD Display Core
+    "amdgpu.gpu_recovery=1"    # Enable GPU recovery
+    "amdgpu.runpm=0"           # Disable runtime power management for stability
+  ];
 
   networking.hostName = "misa-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -166,7 +173,27 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      # AMD GPU drivers and OpenCL support for DaVinci Resolve
+      amdvlk
+      rocmPackages.clr.icd
+      rocmPackages.rocm-runtime
+      rocmPackages.rocminfo
+      rocmPackages.rocm-smi
+    ];
+    extraPackages32 = with pkgs; [
+      driversi686Linux.amdvlk
+    ];
   };
+
+  # Enable AMD GPU support
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  
+  # AMD GPU specific settings
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  
+  # OpenCL support for AMD GPUs (needed for DaVinci Resolve Studio)
+  hardware.amdgpu.opencl.enable = true;
 
   nix.settings.experimental-features = "nix-command flakes";
   
@@ -191,6 +218,25 @@
     git
     kitty
     
+    # Video editing and graphics
+    # davinci-resolve  # Using separately installed Studio version
+    
+    # AMD GPU tools and monitoring
+    radeontop
+    amdgpu-pro-fancontrol  # AMD GPU fan control utility
+    amdgpu-top # AMD GPU performance monitoring
+    clinfo  # OpenCL information utility
+    rocmPackages.rocm-smi  # AMD GPU monitoring
+    
+    # Additional libraries for DaVinci Resolve Studio
+    libGL
+    libGLU
+    freeglut
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libXcursor
+    xorg.libXi
+    
     # Virtualization and container tools
     bridge-utils
     spice-vdagent
@@ -199,6 +245,26 @@
 
   # Enable dconf for virt-manager and other GNOME tools
   programs.dconf.enable = true;
+
+  # Environment variables for AMD GPU and DaVinci Resolve
+  environment.variables = {
+    # AMD GPU environment variables
+    AMD_VULKAN_ICD = "RADV";
+    # OpenCL configuration for AMD GPU
+    OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors";
+    # DaVinci Resolve Studio specific
+    RESOLVE_FORCE_GPU = "1";
+    RESOLVE_SUPPORT_OPENCL = "1";
+    # Additional GPU acceleration
+    CUDA_CACHE_DISABLE = "1";  # Disable CUDA cache since we're using OpenCL
+  };
+
+  # Additional system environment setup for graphics
+  environment.sessionVariables = {
+    # Force hardware acceleration
+    LIBVA_DRIVER_NAME = "radeonsi";
+    VDPAU_DRIVER = "radeonsi";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
