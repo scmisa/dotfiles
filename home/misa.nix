@@ -182,6 +182,7 @@
     libpulseaudio
     libGL
     glxinfo
+    amdgpu_top
 
     # Hacking and reverse engineering research tools
     cutter            # Qt GUI for Radare2

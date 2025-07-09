@@ -223,8 +223,6 @@
     
     # AMD GPU tools and monitoring
     radeontop
-    amdgpu-pro-fancontrol  # AMD GPU fan control utility
-    amdgpu-top # AMD GPU performance monitoring
     clinfo  # OpenCL information utility
     rocmPackages.rocm-smi  # AMD GPU monitoring
     
