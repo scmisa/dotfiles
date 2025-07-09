@@ -59,12 +59,59 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
+    layout = "pl,kr";
+    variant = ",";
+    options = "grp:alt_shift_toggle";
   };
 
   # Configure console keymap
   console.keyMap = "pl2";
+
+  # Enable Korean input method (IBus with Hangul)
+  i18n.inputMethod = {
+    enable = true;
+    type = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ hangul ];
+  };
+
+  # Font configuration for multi-language support including Korean
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      # Nerd Fonts (new format)
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.hack
+      nerd-fonts.sauce-code-pro
+      
+      # Korean fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      nanum
+      
+      # General fonts
+      noto-fonts
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      jetbrains-mono
+      
+      # Additional CJK support
+      source-han-sans
+      source-han-serif
+    ];
+    
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Noto Serif" "Noto Serif CJK KR" ];
+        sansSerif = [ "Noto Sans" "Noto Sans CJK KR" ];
+        monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK KR" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -217,6 +264,10 @@
     direnv
     git
     kitty
+    
+    # Korean input method support
+    ibus
+    ibus-engines.hangul
     
     # Video editing and graphics
     # davinci-resolve  # Using separately installed Studio version
